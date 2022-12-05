@@ -1,16 +1,15 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
-};
+import { Component } from 'react';
+import { nanoid } from 'nanoid';
+import { Layout } from './Layout';
+
+import { ContactForm } from './ContactForm/contactForm';
+
+export class App extends Component {
+  render() {
+    return (
+      <Layout>
+        <ContactForm />
+      </Layout>
+    );
+  }
+}
