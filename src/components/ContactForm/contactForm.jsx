@@ -1,11 +1,15 @@
 // import { Component } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import styled from 'styled-components';
-
-const ErrorText = styled.p`
-  color: red;
-`;
+// import styled from 'styled-components';
+import {
+  FormStyled,
+  Label,
+  Input,
+  TextArea,
+  Button,
+  ErrorText,
+} from '../Component.styled';
 
 const FormError = ({ name }) => {
   return (
@@ -23,7 +27,7 @@ const validationSchema = Yup.object({
   name: Yup.string().required(),
   number: Yup.number().min(8, 'Too Short!').required(),
   notes: Yup.string(),
-  birthDate: Yup.date().nullable().min(new Date(1960, 0, 1)),
+  birthDate: Yup.date().nullable().min(new Date(1960, 0, 30)),
   importantContact: Yup.boolean().default(false),
 });
 
@@ -31,14 +35,14 @@ const initialValues = {
   name: '',
   number: '',
   notes: '',
-  birthDate: new Date(1960, 0, 1).toLocaleDateString(),
+  birthDate: new Date(1960, 0, 30).toLocaleDateString(),
   importantContact: false,
   relation: '',
 };
 
-export const ContactForm = () => {
+const ContactForm = ({ onSubmit }) => {
   const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
+    onSubmit(values);
     resetForm();
   };
 
@@ -48,23 +52,23 @@ export const ContactForm = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      <Form autoComplete="off">
+      <FormStyled autoComplete="off">
         <div>
-          <label htmlFor="name">Full name</label>
+          <Label htmlFor="name">Full name</Label>
           <div>
-            <Field name="name" type="text" placeholder="Full name" />
+            <Input name="name" type="text" placeholder="Full name" />
             <FormError name="name" />
           </div>
         </div>
         <div>
-          <label htmlFor="number">Phone number</label>
+          <Label htmlFor="number">Phone number</Label>
           <div>
-            <Field name="number" type="text" placeholder="Phone number" />
+            <Input name="number" type="text" placeholder="Phone number" />
             <FormError name="number" />
           </div>
         </div>
         <div>
-          <label htmlFor="relation">Relations</label>
+          <Label htmlFor="relation">Relations</Label>
           <div>
             <Field name="relation" as="select">
               <option value="">Select relations</option>
@@ -78,9 +82,9 @@ export const ContactForm = () => {
           </div>
         </div>
         <div>
-          <label htmlFor="birthDate">Date of birthday</label>
+          <Label htmlFor="birthDate">Date of birthday</Label>
           <div>
-            <Field
+            <Input
               name="birthDate"
               type="text"
               placeholder="Date of birthday"
@@ -89,9 +93,9 @@ export const ContactForm = () => {
           </div>
         </div>
         <div>
-          <label htmlFor="notes">For notes</label>
+          <Label htmlFor="notes">For notes</Label>
           <div>
-            <Field name="notes" as="textarea" placeholder="For notes" />
+            <TextArea name="notes" as="textarea" placeholder="For notes" />
             <FormError name="notes" />
           </div>
         </div>
@@ -103,8 +107,10 @@ export const ContactForm = () => {
             </label>
           </div>
         </div>
-        <button type="submit">Submit</button>
-      </Form>
+        <Button type="submit">Add contact</Button>
+      </FormStyled>
     </Formik>
   );
 };
+
+export default ContactForm;
